@@ -30,16 +30,24 @@ class MainActivity : AppCompatActivity() {
             val name = binding.enterName.text.toString()
             val age = binding.enterAge.text.toString()
 
-            // calling method to add
-            // name to our database
-            db.addName(name, age)
 
-            // Toast to message on the screen
-            Toast.makeText(this, name + " added to database", Toast.LENGTH_LONG).show()
+           if (name.isNotEmpty() && age.isNotEmpty()) {
 
-            // at last, clearing edit texts
-            binding.enterName.text.clear()
-            binding.enterAge.text.clear()
+               // calling method to add
+               // name to our database
+               db.addName(name, age)
+
+               // Toast to message on the screen
+               Toast.makeText(this, name + " added to database", Toast.LENGTH_LONG).show()
+
+               // at last, clearing edit texts
+               binding.enterName.text.clear()
+               binding.enterAge.text.clear()
+           } else {
+               Toast.makeText(this, "Empty field not allows.", Toast.LENGTH_SHORT).show()
+           }
+
+
         }
 
         // below code is to add on  click
@@ -56,21 +64,24 @@ class MainActivity : AppCompatActivity() {
             // and add to name text view
             val cursor = db.getName()
 
-            // moving the cursor to first position and
-            // appending value in the text view
-            cursor!!.moveToFirst()
-           binding.Name.append(cursor.getString(cursor.getColumnIndex(DBHelper.NAME_COl)) + "\n")
-           binding.Age.append(cursor.getString(cursor.getColumnIndex(DBHelper.AGE_COL)) + "\n")
 
-            // moving our cursor to next
-            // position and appending values
-            while(cursor.moveToNext()){
-               binding.Name.append(cursor.getString(cursor.getColumnIndex(DBHelper.NAME_COl)) + "\n")
-               binding.Age.append(cursor.getString(cursor.getColumnIndex(DBHelper.AGE_COL)) + "\n")
-            }
 
-            // at last we close our cursor
-            cursor.close()
+                // moving the cursor to first position and
+                // appending value in the text view
+                cursor!!.moveToFirst()
+                binding.Name.append(cursor.getString(cursor.getColumnIndex(DBHelper.NAME_COl)) + "\n")
+                binding.Age.append(cursor.getString(cursor.getColumnIndex(DBHelper.AGE_COL)) + "\n")
+
+                // moving our cursor to next
+                // position and appending values
+                while (cursor.moveToNext()) {
+                    binding.Name.append(cursor.getString(cursor.getColumnIndex(DBHelper.NAME_COl)) + "\n")
+                    binding.Age.append(cursor.getString(cursor.getColumnIndex(DBHelper.AGE_COL)) + "\n")
+                }
+
+                // at last we close our cursor
+                cursor.close()
+
         }
     }
 }
